@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: challenge-educa
+    container_name: challenge-educa-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - challenge-educa
+
+  db:
+    image: mysql:5.7
+    container_name: challenge-educa-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "challenge"
+      MYSQL_ROOT_PASSWORD: "challenge"
+      MYSQL_PASSWORD: "challenge"
+      MYSQL_USER: "challenge_user"
+      # ports:
+      # - "3306:3306"
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+    #   - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./docker-compose/mysql:/var/lib/mysql
+    networks:
+      - challenge-educa
+
+  nginx:
+    image: nginx:alpine
+    container_name: challenge-educa-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - challenge-educa
+
+networks:
+  challenge-educa:
+    driver: bridge
