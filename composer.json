@@ -1,0 +1,12 @@
+{
+    "name": "challenge/educa",
+    "authors": [
+        {"name": "Vinicius Rio"}
+    ],
+    "autoload": {
+        "psr-4": {
+            "src\\": "src/"
+        }
+    },
+    "require": {}
+}
