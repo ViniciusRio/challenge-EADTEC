@@ -1,2 +1,3 @@
 <?php
-    $router->get('/', 'InstructorController@index');
+    $router->get('instructors', 'InstructorController@findAll');
+    $router->get('instructor', 'InstructorController@findById');

@@ -14,9 +14,19 @@ class InstructorController
         $this->instructorGateway = new InstructorGateway();
     }
 
-    public function index()
+    public function findAll()
     {
         $result = $this->instructorGateway->findAll();
+
+        return Response::sendJson($result);
+
+    }
+
+    public function findById(array $params)
+    {
+        $id = $params['id'];
+
+        $result = $this->instructorGateway->findById((int)$id);
 
         return Response::sendJson($result);
 

@@ -48,7 +48,7 @@ class Router
 
     public function callAction($controller, $action)
     {
-        // $params = Request::params();
+        $params = Request::params();
         $controller = "\\src\\controllers\\{$controller}";
         $controller = new $controller();
 
@@ -57,10 +57,10 @@ class Router
         //         "{$controller} does not respond to the {$action} action."
         //     );
         // }
-        // if (empty($params)) {
-        //     return $controller->$action();
-        // }
-
-        return $controller->$action();
+        if (empty($params)) {
+            return $controller->$action();
+        }
+        
+        return $controller->$action($params);
     }
 }

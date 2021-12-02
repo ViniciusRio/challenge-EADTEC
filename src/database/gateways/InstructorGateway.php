@@ -27,7 +27,6 @@ class InstructorGateway
             // $sth->bindValue(':table', $table, PDO::PARAM_STR);
             $sth->execute();
     
-            // $statement = $this->db->query($statement);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
     
             return $result;
@@ -36,5 +35,28 @@ class InstructorGateway
             exit($e->getMessage());
         }
     
+    }
+
+    public function findById(int $id) 
+    {
+        $sth = $this->pdo->prepare(
+            'SELECT 
+                id, name, email, cpf
+            FROM
+                instructor
+            WHERE id = :id'
+        );
+
+        try {
+            $sth->bindValue(':id', $id, PDO::PARAM_INT);   
+            $sth->execute();
+
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
     }
 }
