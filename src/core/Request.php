@@ -21,8 +21,9 @@ class Request
     public static function params(): array
     {
         $urlParams = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-        parse_str($urlParams, $params);
 
+        parse_str($urlParams, $params);
+        
         return $params;
     }
 
