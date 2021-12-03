@@ -59,4 +59,30 @@ class InstructorGateway
             exit($e->getMessage());
         }    
     }
+
+    
+    public function insert(object $instructor)
+    {
+
+        $sth = $this->pdo->prepare(
+            'INSERT INTO instructor 
+                    (name, email, cpf)
+                VALUES
+                    (:name, :email, :cpf);'
+        );
+
+        try {
+
+            $sth->bindValue(':name', $instructor->name, PDO::PARAM_STR);   
+            $sth->bindValue(':email', $instructor->email, PDO::PARAM_STR);   
+            $sth->bindValue(':cpf', $instructor->cpf, PDO::PARAM_STR);   
+
+            $sth->execute();
+
+            return $sth->rowCount();
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
 }

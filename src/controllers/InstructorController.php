@@ -31,4 +31,12 @@ class InstructorController
         return Response::sendJson($result);
 
     }
+
+    public function insert(object $instructor)
+    {
+        $result = $this->instructorGateway->insert($instructor);
+
+        return Response::sendJson($result);
+
+    }
 }
