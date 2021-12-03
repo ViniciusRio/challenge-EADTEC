@@ -49,18 +49,18 @@ class Router
     public function callAction($controller, $action)
     {
         $params = Request::params();
+        $dataFromPost = Request::extractFromPost();
         $controller = "\\src\\controllers\\{$controller}";
         $controller = new $controller();
 
-        // if (!method_exists($controller, $action)) {
-        //     throw new Exception(
-        //         "{$controller} does not respond to the {$action} action."
-        //     );
-        // }
+        if ($dataFromPost) {
+            return $controller->$action($dataFromPost);
+        }
+        
         if (empty($params)) {
             return $controller->$action();
         }
-        
+
         return $controller->$action($params);
     }
 }
