@@ -39,4 +39,12 @@ class InstructorController
         return Response::sendJson($result);
 
     }
+
+    public function put(object $instructor)
+    {
+        $result = $this->instructorGateway->put($instructor);
+
+        return Response::sendJson($result);
+
+    }
 }

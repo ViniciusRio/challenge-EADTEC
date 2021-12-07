@@ -32,7 +32,7 @@ class Request
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    public static function extractFromPost()
+    public static function extractDataFromBody()
     {
         return json_decode(file_get_contents('php://input'));
     }

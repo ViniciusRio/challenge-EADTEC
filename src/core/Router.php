@@ -8,7 +8,10 @@ class Router
 {
     public array $routes = [
         'GET' => [],
-        'POST' => []
+        'POST' => [],
+        'PUT' => [],
+        'PATCH' => [],
+        'DELETE' => []
     ];
 
     public static function load($file)
@@ -35,6 +38,16 @@ class Router
         $this->routes['POST'][$uri] = $action;
     }
 
+    public function put(string $uri, string $action): void
+    {
+        $this->routes['PUT'][$uri] = $action;
+    }
+
+    public function patch(string $uri, string $action): void
+    {
+        $this->routes['PATCH'][$uri] = $action;
+    }
+
     public function direct($uri, $requestType)
     {
         if (array_key_exists($uri, $this->routes[$requestType])) {
@@ -49,12 +62,13 @@ class Router
     public function callAction($controller, $action)
     {
         $params = Request::params();
-        $dataFromPost = Request::extractFromPost();
+        $dataFromBody = Request::extractDataFromBody();
+        
         $controller = "\\src\\controllers\\{$controller}";
         $controller = new $controller();
 
-        if ($dataFromPost) {
-            return $controller->$action($dataFromPost);
+        if ($dataFromBody) {
+            return $controller->$action($dataFromBody);
         }
         
         if (empty($params)) {
