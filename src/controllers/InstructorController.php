@@ -28,6 +28,8 @@ class InstructorController
 
         $result = $this->instructorGateway->findById((int)$id);
 
+        
+
         return Response::sendJson($result);
 
     }
@@ -43,6 +45,15 @@ class InstructorController
     public function put(object $instructor)
     {
         $result = $this->instructorGateway->put($instructor);
+
+        return Response::sendJson($result);
+
+    }
+
+    public function patch(object $instructor)
+    {
+
+        $result = $this->instructorGateway->patch($instructor);
 
         return Response::sendJson($result);
 

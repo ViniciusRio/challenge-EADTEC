@@ -113,4 +113,42 @@ class InstructorGateway
         }    
     }
 
+    public function patch(object $instructor)
+    {
+        $sth = $this->pdo->prepare(
+            'UPDATE instructor
+             SET 
+                name = :name,
+                email  = :email,
+                cpf = :cpf
+            WHERE id = :id;'
+        );
+            
+
+        try {
+
+            $instructorById = $this->findById((int) $instructor->id);
+
+            if ($instructorById) {
+
+                $currentInstructor = (object) $instructorById[0];
+
+                $sth->bindValue(':id', $instructor->id);
+
+                $instructor->name ? $sth->bindValue(':name', $instructor->name, PDO::PARAM_STR) : $sth->bindValue(':name', $currentInstructor->name, PDO::PARAM_STR);
+                $instructor->email ? $sth->bindValue(':email', $instructor->email, PDO::PARAM_STR) : $sth->bindValue(':email', $currentInstructor->email, PDO::PARAM_STR);
+                $instructor->cpf ? $sth->bindValue(':cpf', $instructor->cpf, PDO::PARAM_STR) : $sth->bindValue(':cpf', $currentInstructor->cpf, PDO::PARAM_STR);
+
+                $sth->execute();
+
+                return $this->findById((int) $instructor->id);
+            }
+
+            return null;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
 }
