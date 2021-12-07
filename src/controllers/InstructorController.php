@@ -58,4 +58,14 @@ class InstructorController
         return Response::sendJson($result);
 
     }
+
+    
+    public function delete(array $params)
+    {
+        $id = (int) $params['id'];
+        $result = $this->instructorGateway->delete($id);
+
+        return Response::sendJson($result);
+
+    }
 }

@@ -48,6 +48,12 @@ class Router
         $this->routes['PATCH'][$uri] = $action;
     }
 
+    
+    public function delete(string $uri, string $action): void
+    {
+        $this->routes['DELETE'][$uri] = $action;
+    }
+
     public function direct($uri, $requestType)
     {
         if (array_key_exists($uri, $this->routes[$requestType])) {

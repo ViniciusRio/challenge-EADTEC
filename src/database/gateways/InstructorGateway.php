@@ -151,4 +151,22 @@ class InstructorGateway
         }    
     }
 
+    public function delete(int $id)
+    {
+        $sth = $this->pdo->prepare(
+            'DELETE FROM instructor
+            WHERE id = :id;'
+        );
+
+        try {
+            $sth->bindValue(':id', $id, PDO::PARAM_INT);
+            $sth->execute();
+
+            return $sth->rowCount();
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
 }
