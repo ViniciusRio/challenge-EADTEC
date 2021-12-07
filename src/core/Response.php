@@ -7,7 +7,30 @@ class Response
     public static function sendJson($params) 
     {
         header('Content-Type: application/json');
-        http_response_code(200);
+        http_response_code(201);
+
+        if ($params === 1) {
+            $responseOk = array(
+                "status" => 201,
+                "response" => 'Action executed'
+            );
+
+            echo json_encode($responseOk);
+
+            return;
+            
+        } 
+        if ($params === 0) {
+            $responseOk = array(
+                "status" => 404,
+                "response" => 'Instructor not found'
+            );
+
+            echo json_encode($responseOk);
+
+            return;
+            
+        }
 
         echo json_encode($params);
 
