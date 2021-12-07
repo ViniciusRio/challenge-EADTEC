@@ -25,12 +25,9 @@ services:
       MYSQL_ROOT_PASSWORD: "challenge"
       MYSQL_PASSWORD: "challenge"
       MYSQL_USER: "challenge_user"
-      # ports:
-      # - "3306:3306"
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-    #   - ./docker-compose/mysql:/docker-entrypoint-initdb.d
       - ./docker-compose/mysql:/var/lib/mysql
     networks:
       - challenge-educa
@@ -47,6 +44,21 @@ services:
     networks:
       - challenge-educa
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-educa
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: challenge   
+    restart: always
+    ports:
+      - 8081:80  
+    networks:
+      - challenge-educa
 networks:
   challenge-educa:
     driver: bridge
