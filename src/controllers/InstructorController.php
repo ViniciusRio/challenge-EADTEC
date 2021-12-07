@@ -9,9 +9,9 @@ class InstructorController
 {
     private InstructorGateway $instructorGateway;
 
-    public function __construct()
+    public function __construct(InstructorGateway $instructorGateway)
     {
-        $this->instructorGateway = new InstructorGateway();
+        $this->instructorGateway = $instructorGateway;
     }
 
     public function findAll()

@@ -67,11 +67,16 @@ class Router
 
     public function callAction($controller, $action)
     {
+        $gateway = getGatewayNameByController($controller);
+
         $params = Request::params();
         $dataFromBody = Request::extractDataFromBody();
-        
-        $controller = "\\src\\controllers\\{$controller}";
-        $controller = new $controller();
+
+        $pathGateway = getPathGateway($gateway);
+        $pathGateway = new $pathGateway();
+
+        $controller = getPathController($controller);
+        $controller = new $controller($pathGateway);
 
         if ($dataFromBody) {
             return $controller->$action($dataFromBody);
