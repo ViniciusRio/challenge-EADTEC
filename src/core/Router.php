@@ -2,7 +2,7 @@
 
 namespace src\core;
 
-use Exception;
+use src\core\Response;
 
 class Router
 {
@@ -56,7 +56,7 @@ class Router
             );
         }
 
-        throw new Exception('No route found');
+        return Response::routeNotFound($uri);
     }
 
     public function callAction($controller, $action)
