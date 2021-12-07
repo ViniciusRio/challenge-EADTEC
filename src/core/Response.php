@@ -7,11 +7,11 @@ class Response
     public static function sendJson($params) 
     {
         header('Content-Type: application/json');
-        http_response_code(201);
+        http_response_code(200);
 
         if ($params === 1) {
             $responseOk = array(
-                "status" => 201,
+                "status" => 200,
                 "response" => 'Action executed'
             );
 
